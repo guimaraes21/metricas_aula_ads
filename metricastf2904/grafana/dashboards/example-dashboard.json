@@ -1,0 +1,75 @@
+{
+  "annotations": {
+    "title": "Observabilidade - Painel de Vendas",
+    "tags": ["vendas", "pedidos", "clientes", "produtos"],
+    "timezone": "browser",
+    "panels": [
+      {
+        "type": "graph",
+        "title": "Total de Pedidos por Cliente",
+        "targets": [
+          {
+            "target": "SELECT c.nome, COUNT(p.id) AS total_pedidos, SUM(p.total) AS total_vendas FROM clientes c JOIN pedidos p ON c.id = p.cliente_id GROUP BY c.nome",
+            "refId": "A"
+          }
+        ],
+        "xaxis": {
+          "mode": "category",
+          "name": "Cliente",
+          "show": true
+        },
+        "yaxes": [
+          {
+            "format": "short",
+            "label": "Total de Pedidos",
+            "logBase": 1,
+            "min": null,
+            "max": null,
+            "show": true
+          },
+          {
+            "format": "currency",
+            "label": "Total de Vendas",
+            "logBase": 1,
+            "min": null,
+            "max": null,
+            "show": true
+          }
+        ],
+        "lines": true,
+        "fill": 1,
+        "linewidth": 2,
+        "points": false,
+        "pointradius": 5,
+        "stack": false,
+        "legend": {
+          "show": true
+        }
+      },
+      {
+        "type": "table",
+        "title": "Estoque de Produtos",
+        "targets": [
+          {
+            "target": "SELECT nome, estoque FROM produtos",
+            "refId": "B"
+          }
+        ],
+        "columns": [
+          {
+            "text": "Produto",
+            "value": "nome"
+          },
+          {
+            "text": "Estoque",
+            "value": "estoque"
+          }
+        ],
+        "pageSize": 10,
+        "showHeader": true
+      }
+    ],
+    "schemaVersion": 16,
+    "version": 1
+  }
+}
